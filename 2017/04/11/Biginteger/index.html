@@ -91,10 +91,10 @@
 <meta name="keywords" content="JAVA-knowledge">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于JAVA中BigInteger的用法及练习">
-<meta property="og:url" content="http://yoursite.com/2017/04/11/Biginteger/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/04/11/BigInteger/index.html">
 <meta property="og:site_name" content="hexo">
 <meta property="og:description" content="【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了">
-<meta property="og:updated_time" content="2017-04-11T03:58:14.191Z">
+<meta property="og:updated_time" content="2017-04-11T13:08:10.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于JAVA中BigInteger的用法及练习">
 <meta name="twitter:description" content="【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了">
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/11/Biginteger/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/11/BigInteger/"/>
 
 
 
@@ -250,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/Biginteger/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/BigInteger/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zyf3333">
@@ -333,6 +333,8 @@
 <pre><code>Case 2:
 112233445566778899 + 998877665544332211 = 1111111111111111110
 </code></pre><p><strong><em>answer</em></strong>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.math.BigInteger;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></div><div class="line">    &#123;</div><div class="line">        Scanner scan=<span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> a=scan.nextInt();</div><div class="line">        <span class="keyword">if</span>(a&gt;=<span class="number">1</span>&amp;&amp;a&lt;=<span class="number">20</span>)</div><div class="line">        &#123;</div><div class="line">            BigInteger[] a1 =<span class="keyword">new</span> BigInteger[a+<span class="number">1</span>];</div><div class="line">            BigInteger[] a2 =<span class="keyword">new</span> BigInteger[a+<span class="number">1</span>];</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=a;i++)</div><div class="line">            &#123;</div><div class="line">                a1[i]=scan.nextBigInteger();</div><div class="line">                a2[i]=scan.nextBigInteger();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a;i++)</div><div class="line">            &#123;</div><div class="line">                System.out.println(<span class="string">"Case"</span>+<span class="string">" "</span>+i+<span class="string">":\r\n"</span>+</div><div class="line">                a1[i]+<span class="string">" + "</span>+a2[i]+<span class="string">" = "</span>+a1[i].add(a2[i])+<span class="string">"\r\n"</span>);</div><div class="line">                <span class="comment">//注!!!在Windows中：'\r' 回车，回到当前行的行首，而不会换到下一行，如果接着输出的话，本行以前的内容会被***逐一覆盖***；'\n' 换行，换到当前位置的下一行，而***不会回到行首***；</span></div><div class="line">                <span class="comment">//Unix系统里，每行结尾只有“&lt;换行&gt;”，即"\n"；Windows系统里面，每行结尾是“&lt;回车&gt;&lt;换行&gt;”，即“\r\n”；Mac系统里，每行结尾是“&lt;回车&gt;”，即"\r"；</span></div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"Case"</span>+<span class="string">" "</span>+a+<span class="string">":\r\n"</span>+a1[a]+<span class="string">" + "</span>+a2[a]+<span class="string">" = "</span>+a1[a].add(a2[a]));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> System.out.println(<span class="number">0</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="BigInteger-常量"><a href="#BigInteger-常量" class="headerlink" title="BigInteger 常量"></a>BigInteger 常量</h2><p>字段摘要<br>static BigInteger    ONE<br>          BigInteger 的常量 1。<br>static BigInteger    TEN<br>          BigInteger 的常量 10。<br>static BigInteger    ZERO<br>          BigInteger 的常量 0。 </p>
+<h2 id="BigInteger-方法"><a href="#BigInteger-方法" class="headerlink" title="BigInteger 方法"></a>BigInteger 方法</h2><p>BigInteger    add(BigInteger val)<br>          返回其值为 (this + val) 的 BigInteger。<br>boolean    equals(Object x)<br>          比较此 BigInteger 与指定的 Object 的相等性。值的比较<br>static BigInteger    valueOf(long val)<br>          返回其值等于指定 long 的值的 BigInteger。<br>public BigInteger multiply(BigInteger val)<br>返回其值为 (this * val) 的 BigInteger.</p>
 
       
     </div>
@@ -507,7 +509,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BigInteger的用途"><span class="nav-number">1.</span> <span class="nav-text">BigInteger的用途</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention"><span class="nav-number">1.1.</span> <span class="nav-text">Attention*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exercise"><span class="nav-number">2.</span> <span class="nav-text">exercise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDOJ-A-B-Problem-2"><span class="nav-number">2.1.</span> <span class="nav-text">HDOJ-A+B Problem 2</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BigInteger的用途"><span class="nav-number">1.</span> <span class="nav-text">BigInteger的用途</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention"><span class="nav-number">1.1.</span> <span class="nav-text">Attention*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exercise"><span class="nav-number">2.</span> <span class="nav-text">exercise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDOJ-A-B-Problem-2"><span class="nav-number">2.1.</span> <span class="nav-text">HDOJ-A+B Problem 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BigInteger-常量"><span class="nav-number">2.2.</span> <span class="nav-text">BigInteger 常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BigInteger-方法"><span class="nav-number">2.3.</span> <span class="nav-text">BigInteger 方法</span></a></li></ol></li></ol></div>
             
 
           </div>
