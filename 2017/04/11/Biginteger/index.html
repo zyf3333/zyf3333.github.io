@@ -1,0 +1,679 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA-knowledge," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了">
+<meta name="keywords" content="JAVA-knowledge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于JAVA中BigInteger的用法及练习">
+<meta property="og:url" content="http://yoursite.com/2017/04/11/Biginteger/index.html">
+<meta property="og:site_name" content="hexo">
+<meta property="og:description" content="【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了">
+<meta property="og:updated_time" content="2017-04-11T03:58:14.191Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于JAVA中BigInteger的用法及练习">
+<meta name="twitter:description" content="【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/11/Biginteger/"/>
+
+
+
+
+
+  <title> 关于JAVA中BigInteger的用法及练习 | hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/Biginteger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zyf3333">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于JAVA中BigInteger的用法及练习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T11:09:52+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  【Java】自从有了BigInteger，我再也不用担心要处理的数据有多大了
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="BigInteger的用途"><a href="#BigInteger的用途" class="headerlink" title="BigInteger的用途"></a>BigInteger的用途</h1><p>想当年，在C语言的学习中，我们常常被灌输，int的范围不能超过2^32如果你的操作系统是64位的还能去到2^64，而long则是固定2^32，如果你要用到更大的数则应该用double等浮点型表示，虽然double的长度是你操作系统的位长，但表示大型数据的时候仍然会丢失精度，因此C语言甚至还出现一些表示大数据但不能够丢失精度的数组题，记得当时候我也曾经做过<br>使用一个循环结构来对一个超长数据字符串，比如64个1，不停地对10取余，然后之后要实现加减乘除，非常复杂的，与之后学习的汇编语言时候，仅能使用位移来实现加减乘除时候，那个程序写得老长老长。<br>当然，平时也无须考虑这么多，因为我们处理的数据基本上很少超过int的2^32，毕竟我们不是读数学系的，int的长度已经是足够了，我们处理的数据其实很多时候超过255就不错了。不过，如果你让我处理一个超长数据，我放在Java中仍然能够轻松解决，毕竟Java已经把大数据的处理封装在BigInteger中。<br>如下是BigInteger的基本使用方法，就是构造方法与四则混合运算：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">BigIntegertest</span><span class="params">()</span> </span>&#123;</div><div class="line">	BigInteger num1 = <span class="keyword">new</span> BigInteger(</div><div class="line">			<span class="string">"1111111111111111111111111111111111111111111111111111111111111"</span>);<span class="comment">//注意参数为字符串！！不是数</span></div><div class="line">	BigInteger num2 = <span class="keyword">new</span> BigInteger(</div><div class="line">			<span class="string">"11111111111111111111111111111111111111111111111111111111111111"</span>);</div><div class="line">	System.out.println(<span class="string">"num1加上num2的结果为："</span> + num1.add(num2));</div><div class="line">	System.out.println(<span class="string">"num1减去num2的结果为："</span> + num1.subtract(num2));</div><div class="line">	System.out.println(<span class="string">"num1乘以num2的结果为："</span> + num1.multiply(num2));</div><div class="line">	System.out.println(<span class="string">"num1除以num2的商为："</span> + num1.divide(num2));</div><div class="line">	System.out.println(<span class="string">"num1除以num2的余数为："</span> + num1.mod(num2));</div><div class="line">	System.out.println(<span class="string">"num1对2取余（也就是num1是否为双数）的结果是："</span></div><div class="line">			+ num1.mod(<span class="keyword">new</span> BigInteger(<span class="string">"2"</span>)));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对了，记得在头部使用import java.math.*;因为BigInteger要用到这个类<br>下面是上面这段方法被调用之后的运行结果：<br>======BigInteger数据结构的测试开始======<br>num1加上num2的结果为：12222222222222222222222222222222222222222222222222222222222222<br>num1减去num2的结果为：-10000000000000000000000000000000000000000000000000000000000000<br>num1乘以num2的结果为：12345679012345679012345679012345679012345679012345679012345677654320987654320987654320987654320987654320987654320987654321<br>num1除以num2的商为：0<br>num1除以num2的余数为：1111111111111111111111111111111111111111111111111111111111111<br>num1对2取余（也就是num1是否为双数）的结果是：1<br>======BigInteger数据结构的测试结束======</p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention*"></a>Attention*</h2><p>1、加减乘除取余分别使用add,subtract,multiply,divide,mod方法，与平常程序的运算符一样，所谓的除只是求出两数之商<br>2、上述所有方法里面放的<strong><em>必须</em></strong>是BigInteger类型的东西<br>3、BigInteger的构造方法里面必须是一个字符串，不能是一个数，<strong><em>例如</em></strong>new BigInteger(1111111111111111111111111111111111111111111111111111111111111);是错误的，因为Java中，甚至任何程序中都无法传递一个这么长的数，把这么长的数当作是参数使用。</p>
+<h1 id="exercise"><a href="#exercise" class="headerlink" title="exercise"></a>exercise</h1><h2 id="HDOJ-A-B-Problem-2"><a href="#HDOJ-A-B-Problem-2" class="headerlink" title="HDOJ-A+B Problem 2"></a>HDOJ<1002>-<strong><em>A+B Problem 2</em></strong></1002></h2><p><strong><em>request</em></strong>:1.Given two integers A and B, your job is to calculate the Sum of A + B.<br>              2.Input:The first line of the input contains an integer T(1&lt;=T&lt;=20) which means the number of test cases. Then T lines follow, each line consists of two positive integers, A and B. Notice that the integers are very large, that means you should not process them by using 32-bit integer. You may assume the length of each integer will not exceed 1000.<br>              3.Output:For each test case, you should output two lines. The first line is “Case #:”, # means the number of the test case. The second line is the an equation “A + B = Sum”, Sum means the result of A + B. Note there are some spaces int the equation. Output a blank line between two test cases.<br>              4.Sample Input:<br>              2<br>              1 2<br>              112233445566778899 998877665544332211<br>                Sample Output:<br>              Case 1:<br>              1 + 2 = 3</p>
+<pre><code>Case 2:
+112233445566778899 + 998877665544332211 = 1111111111111111110
+</code></pre><p><strong><em>answer</em></strong>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.math.BigInteger;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></div><div class="line">    &#123;</div><div class="line">        Scanner scan=<span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> a=scan.nextInt();</div><div class="line">        <span class="keyword">if</span>(a&gt;=<span class="number">1</span>&amp;&amp;a&lt;=<span class="number">20</span>)</div><div class="line">        &#123;</div><div class="line">            BigInteger[] a1 =<span class="keyword">new</span> BigInteger[a+<span class="number">1</span>];</div><div class="line">            BigInteger[] a2 =<span class="keyword">new</span> BigInteger[a+<span class="number">1</span>];</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=a;i++)</div><div class="line">            &#123;</div><div class="line">                a1[i]=scan.nextBigInteger();</div><div class="line">                a2[i]=scan.nextBigInteger();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a;i++)</div><div class="line">            &#123;</div><div class="line">                System.out.println(<span class="string">"Case"</span>+<span class="string">" "</span>+i+<span class="string">":\r\n"</span>+</div><div class="line">                a1[i]+<span class="string">" + "</span>+a2[i]+<span class="string">" = "</span>+a1[i].add(a2[i])+<span class="string">"\r\n"</span>);</div><div class="line">                <span class="comment">//注!!!在Windows中：'\r' 回车，回到当前行的行首，而不会换到下一行，如果接着输出的话，本行以前的内容会被***逐一覆盖***；'\n' 换行，换到当前位置的下一行，而***不会回到行首***；</span></div><div class="line">                <span class="comment">//Unix系统里，每行结尾只有“&lt;换行&gt;”，即"\n"；Windows系统里面，每行结尾是“&lt;回车&gt;&lt;换行&gt;”，即“\r\n”；Mac系统里，每行结尾是“&lt;回车&gt;”，即"\r"；</span></div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"Case"</span>+<span class="string">" "</span>+a+<span class="string">":\r\n"</span>+a1[a]+<span class="string">" + "</span>+a2[a]+<span class="string">" = "</span>+a1[a].add(a2[a]));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> System.out.println(<span class="number">0</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA-knowledge/" rel="tag"># JAVA-knowledge</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/09/scanner/" rel="prev" title="JAVA中Scanner的用法">
+                JAVA中Scanner的用法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/1.jpg"
+               alt="zyf3333" />
+          <p class="site-author-name" itemprop="name">zyf3333</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BigInteger的用途"><span class="nav-number">1.</span> <span class="nav-text">BigInteger的用途</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention"><span class="nav-number">1.1.</span> <span class="nav-text">Attention*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exercise"><span class="nav-number">2.</span> <span class="nav-text">exercise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDOJ-A-B-Problem-2"><span class="nav-number">2.1.</span> <span class="nav-text">HDOJ-A+B Problem 2</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zyf3333</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
